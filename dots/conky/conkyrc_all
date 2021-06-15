@@ -1,0 +1,114 @@
+-- vim: ts=4 sw=4 noet ai cindent syntax=lua
+--[[
+Conky, a system monitor, based on torsmo
+
+Any original torsmo code is licensed under the BSD license
+
+All code written since the fork of torsmo is licensed under the GPL
+
+Please see COPYING for details
+
+Copyright (c) 2004, Hannu Saransaari and Lauri Hakkarainen
+Copyright (c) 2005-2012 Brenden Matthews, Philip Kovacs, et. al. (see AUTHORS)
+All rights reserved.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+]]
+conky.config = {
+    alignment = 'top_left',
+    background = true,
+    border_width = 0.5,
+    cpu_avg_samples = 4,
+    default_color = 'white',
+    default_outline_color = 'grey',
+    default_shade_color = 'black',
+    draw_borders = true,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = false,
+    use_xft = true,
+    font = 'DejaVu Sans Mono:size=13',
+    gap_x = 5,
+    gap_y = 15,
+    minimum_height = 5,
+    minimum_width = 5,
+    net_avg_samples = 2,
+    double_buffer = true,
+    out_to_console = false,
+    out_to_stderr = false,
+    extra_newline = false,
+    own_window = true,
+    own_window_colour = '000000',
+    own_window_class = 'Conky',
+    own_window_argb_visual = true,
+    own_window_argb_count = 0,
+    own_window_type = 'override',
+    own_window_transparent = true,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    stippled_borders = 0,
+    update_interval = 1,
+    uppercase = false,
+    use_spacer = 'none',
+    show_graph_scale = false,
+    show_graph_range = false
+}
+conky.text = [[
+
+${font Entopia:bold:italic:size=15}${color DDDDDD}PERFORMANCE ${hr 2}${font}
+${color ABADAF}${font Entopia:bold:size=12}System Uptime :${alignr}${font Latin Modern Mono Caps:bold:size=10}${color ABADAF} $uptime
+${color ABADAF}${font Entopia:bold:size=12}RAM :${font Latin Modern Mono Caps:bold:size=10}${color ABADAF} $mem $memperc% ${color 747577}${membar 4}
+${color ABADAF}${font Entopia:bold:size=12}Swap:${font Latin Modern Mono Caps:bold:size=10}${color ABADAF} $swap/$swapmax $swapperc% ${color 747577}${swapbar 4}
+${color ABADAF}${font Entopia:bold:size=12}Battery: ${font Latin Modern Mono Caps:bold:size=10}${color ABADAF}${battery_percent BAT0}%  ${color 747577}${alignr}${battery_bar 4, 160 BAT0}
+${alignr}${font Latin Modern Mono Caps:size=8}${color 000000}${battery_time BAT0}
+${offset 7}${font DejaVu Sans Mono:bold:size=8}${color ABADAB}Core 1 ${freq_g cpu1}GHz ${color 747577}${cpubar cpu1 6,150} ${color ABADAB}${cpu cpu1}%
+${offset 7}${color ABADAB}Core 2 ${freq_g cpu2}GHz ${color 747577}${cpubar cpu2 6,150} ${color ABADAB}${cpu cpu2}%
+${offset 7}${color ABADAB}Core 3 ${freq_g cpu3}GHz ${color 747577}${cpubar cpu3 6,150} ${color ABADAB}${cpu cpu3}%
+${offset 7}${color ABADAB}Core 4 ${freq_g cpu4}GHz ${color 747577}${cpubar cpu4 6,150} ${color ABADAB}${cpu cpu4}%
+${offset 7}${color ABADAB}Core 5 ${freq_g cpu5}GHz ${color 747577}${cpubar cpu5 6,150} ${color ABADAB}${cpu cpu5}%
+${offset 7}${color ABADAB}Core 6 ${freq_g cpu6}GHz ${color 747577}${cpubar cpu6 6,150} ${color ABADAB}${cpu cpu6}%
+${offset 7}${color ABADAB}Core 7 ${freq_g cpu7}GHz ${color 747577}${cpubar cpu7 6,150} ${color ABADAB}${cpu cpu7}%
+${offset 7}${color ABADAB}Core 8 ${freq_g cpu8}GHz ${color 747577}${cpubar cpu8 6,150} ${color ABADAB}${cpu cpu8}%
+${font Latin Modern Mono Caps:bold:size=10}${color ABADAF}Procs:${color ABADAF}$processes      ${alignc}${color ABADAF}Run:${color ABADAF} $running_processes${alignr}${color ABADAF}Temp: ${color ABADAF}${acpitemp}C
+
+${font Entopia:bold:italic:size=15}${color DDDDDD}NETWORK ${hr 2}${font DejaVu Sans Mono:size=9}
+${color ABADAF}${font Entopia:bold:size=6}Local IPs:${color ABADAF}${alignr}External IPs:
+${font Latin Modern Mono Caps:bold:size=8}${color ABADAF}${execi 1000 ip a | grep inet | grep -vw lo | grep -v inet6 | cut -d \/ -f1 | sed 's/[^0-9\.]*//g'}  ${alignr}${execi 1000  wget -q -O- http://ipecho.net/plain; echo}
+${color ABADAF}${font Entopia:bold:size=8}${wireless_essid wlp3s0} ${stippled_hr 2}
+${color ABADAF}${font DejaVu Sans Mono:size=8}WiFi ${font Latin Modern Mono Caps:bold:size=8}${color ABADAF}${alignr}${wireless_link_qual_perc 
+wlp2s0}%(${wireless_link_qual wlp2s0}/${wireless_link_qual_max wlp2s0}) ${font Latin Modern Mono Caps:bold:size=8}${color ABADAF}${addr wlp2s0}
+${font sans-serif:normal:size=8}Down:${font Latin Modern Mono Caps:bold:size=8}${color ABADAF}${totaldown wlp3s0}(${downspeed wlp3s0}/s)${font sans-serif:normal:size=6}${alignr}${color ABADAF}Up:${font Latin Modern Mono Caps:bold:size=6}${totalup wlp3s0}(${upspeed wlp3s0}/s) 
+${color ABADAF}${downspeedgraph wlp3s0 30,150 } ${color ABADAF}${alignr}${upspeedgraph wlp3s0 30,150 }
+${color ABADAF}${font Entopia:bold:size=8}Wired${stippled_hr 2}${color ABADAF}
+${font sans-serif:normal:size=6}${color ABADAF}Down:${font Latin Modern Mono Caps:bold:size=6}${color ABADAF}${totaldown enp3s0}(${downspeed enp3s0}/s)${alignr}${font sans-serif:normal:size=6}${alignr}${color ABADAF}Up:${font Latin Modern Mono Caps:bold:size=6}${color ABADAF}${totalup enp3s0}(${upspeed enp3s0}/s)
+${color 747577}${downspeedgraph enp3s0 30,150 } ${color 747577}${alignr}${upspeedgraph enp3s0 30,150 }
+
+${font Entopia:bold:italic:size=15}${color DDDDDD}DISK USAGE ${hr 2}
+${font Latin Modern Mono Caps:bold:size=8}${color ABADAF}/ $alignc ${fs_used /} / ${fs_size /} $alignr ${fs_used_perc /}%
+${color 747577}${fs_bar /}
+${font Latin Modern Mono Caps:bold:size=8}${color ABADAF}/home $alignc ${fs_used /home} /home ${fs_size /home} $alignr ${fs_used_perc /home}%
+${color 747577}${fs_bar /home}
+${font Latin Modern Mono Caps:bold:size=8}${color ABADAF}/mnt/data $alignc ${fs_used /mnt/data} /tmp ${fs_size /mnt/data} $alignr ${fs_used_perc /mnt/data}%
+${color 747577}${fs_bar /mnt/data}
+
+${font Entopia:bold:italic:size=15}${color DDDDDD}SYSTEM DETAILS${hr 2}       
+${color 747577}${font Entopia:bold:size=10}Version : ${alignr}${font Latin Modern Mono Caps:bold:size=9}${color ABADAF}${exec hostnamectl | grep System | cut -c21-40}
+${color 747577}${font Entopia:bold:size=10}Arch.. : ${alignr}${font Latin Modern Mono Caps:bold:size=9}${color ABADAF}${exec hostnamectl | grep Architecture | cut -c7-30}
+${color 747577}${font Entopia:bold:size=10}System : ${alignr}${font Latin Modern Mono Caps:bold:size=9}${color ABADAF}${exec hostnamectl | grep Kernel | cut -c13-32} 
+${font Latin Modern Mono Caps:bold:size=9}${alignr}${color DDDDDD}$nodename
+
+${font Latin Modern Mono Caps:bold:size=8}${color DDDDDD}CPU USAGES :${cpu cpu0}% ${freq_g cpu0}GHz ${cpu voltage_v}V
+${cpugraph 100,550}
+${font Latin Modern Mono Caps:bold:size=8}${color DDDDDD}MEMORY USAGES :${memperc}%
+${memgraph 100,550}
+
+]]
